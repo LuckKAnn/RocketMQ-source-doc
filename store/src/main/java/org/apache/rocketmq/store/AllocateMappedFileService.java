@@ -33,6 +33,7 @@ import org.apache.rocketmq.store.config.BrokerRole;
 
 /**
  * Create MappedFile in advance
+ * K2 会提前准备好下一个commitLog文件的分配，防止在消息写入的过程中分配文件，产生抖动。
  */
 public class AllocateMappedFileService extends ServiceThread {
     private static final InternalLogger log = InternalLoggerFactory.getLogger(LoggerName.STORE_LOGGER_NAME);

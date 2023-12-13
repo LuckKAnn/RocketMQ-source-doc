@@ -48,6 +48,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.apache.rocketmq.remoting.netty.TlsSystemConfig.TLS_ENABLE;
 
+// k1 broker启动类
 public class BrokerStartup {
     public static Properties properties = null;
     public static CommandLine commandLine = null;
@@ -107,10 +108,9 @@ public class BrokerStartup {
                 System.exit(-1);
             }
             //K1 Broker的核心配置信息
-
             final BrokerConfig brokerConfig = new BrokerConfig();
             final NettyServerConfig nettyServerConfig = new NettyServerConfig();
-            //LK:为什么要配置客户端，因为broker在事务消息的时候是作为客户端
+            //K1: 为什么要配置客户端，因为broker在事务消息的时候是作为客户端
             final NettyClientConfig nettyClientConfig = new NettyClientConfig();
             //TLS加密相关
             nettyClientConfig.setUseTLS(Boolean.parseBoolean(System.getProperty(TLS_ENABLE,

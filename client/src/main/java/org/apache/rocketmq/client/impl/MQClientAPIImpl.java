@@ -164,6 +164,7 @@ import org.apache.rocketmq.remoting.protocol.LanguageCode;
 import org.apache.rocketmq.remoting.protocol.RemotingCommand;
 import org.apache.rocketmq.remoting.protocol.RemotingSerializable;
 
+// K2 封装了客户端服务端的 RPC，对调用者隐藏了真正网络通信部分的具体实现；
 public class MQClientAPIImpl {
 
     private final static InternalLogger log = ClientLogger.getLog();

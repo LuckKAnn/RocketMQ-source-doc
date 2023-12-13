@@ -49,7 +49,7 @@ public class TransactionListenerImpl implements TransactionListener {
 
     @Override
     public LocalTransactionState checkLocalTransaction(MessageExt msg) {
-//        Integer status = localTrans.get(msg.getTransactionId());
+       // Integer status = localTrans.get(msg.getTransactionId());
 //        if (null != status) {
 //            switch (status) {
 //                case 0:

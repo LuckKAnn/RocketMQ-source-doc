@@ -51,6 +51,7 @@ import org.apache.rocketmq.remoting.RPCHook;
 
 import static org.apache.rocketmq.client.trace.TraceConstants.TRACE_INSTANCE_NAME;
 
+// 异步的消息轨迹分发器？
 public class AsyncTraceDispatcher implements TraceDispatcher {
 
     private final static InternalLogger log = ClientLogger.getLog();
@@ -62,6 +63,7 @@ public class AsyncTraceDispatcher implements TraceDispatcher {
     // The last discard number of log
     private AtomicLong discardCount;
     private Thread worker;
+    // ArrayBlockingQueue用作消息轨迹的存储
     private ArrayBlockingQueue<TraceContext> traceContextQueue;
     private ArrayBlockingQueue<Runnable> appenderQueue;
     private volatile Thread shutDownHook;
@@ -280,6 +282,7 @@ public class AsyncTraceDispatcher implements TraceDispatcher {
             sendTraceData(contextList);
         }
 
+        // 真正的执行消息轨迹的发送
         public void sendTraceData(List<TraceContext> contextList) {
             Map<String, List<TraceTransferBean>> transBeanMap = new HashMap<String, List<TraceTransferBean>>();
             for (TraceContext context : contextList) {
@@ -310,6 +313,7 @@ public class AsyncTraceDispatcher implements TraceDispatcher {
                     dataTopic = key[0];
                     regionId = key[1];
                 }
+                // 实际上消息也是发送到MQ上
                 flushData(entry.getValue(), dataTopic, regionId);
             }
         }

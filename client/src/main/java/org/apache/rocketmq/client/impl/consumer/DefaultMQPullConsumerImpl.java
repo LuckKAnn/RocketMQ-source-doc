@@ -390,6 +390,7 @@ public class DefaultMQPullConsumerImpl implements MQConsumerInner {
         try {
             this.isRunning();
             Set<MessageQueue> mqs = new HashSet<MessageQueue>();
+            // 分配给当前consumer的MessageQueue？
             Set<MessageQueue> allocateMq = this.rebalanceImpl.getProcessQueueTable().keySet();
             mqs.addAll(allocateMq);
             this.offsetStore.persistAll(mqs);

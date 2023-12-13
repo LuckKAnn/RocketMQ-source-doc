@@ -110,17 +110,16 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 
     @Override
     public void incCorePoolSize() {
-        // long corePoolSize = this.consumeExecutor.getCorePoolSize();
-        // if (corePoolSize < this.defaultMQPushConsumer.getConsumeThreadMax())
-        // {
-        // this.consumeExecutor.setCorePoolSize(this.consumeExecutor.getCorePoolSize()
-        // + 1);
-        // }
-        // log.info("incCorePoolSize Concurrently from {} to {}, ConsumerGroup:
-        // {}",
-        // corePoolSize,
-        // this.consumeExecutor.getCorePoolSize(),
-        // this.consumerGroup);
+        long corePoolSize = this.consumeExecutor.getCorePoolSize();
+        if (corePoolSize < this.defaultMQPushConsumer.getConsumeThreadMax())
+        {
+        this.consumeExecutor.setCorePoolSize(this.consumeExecutor.getCorePoolSize()
+        + 1);
+        }
+        log.info("incCorePoolSize Concurrently from {} to {}, ConsumerGroup: {}",
+        corePoolSize,
+        this.consumeExecutor.getCorePoolSize(),
+        this.consumerGroup);
     }
 
     @Override
@@ -429,6 +428,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
                     returnType = ConsumeReturnType.RETURNNULL;
                 }
             } else if (consumeRT >= defaultMQPushConsumer.getConsumeTimeout() * 60 * 1000) {
+                // 超时设置
                 returnType = ConsumeReturnType.TIME_OUT;
             } else if (ConsumeConcurrentlyStatus.RECONSUME_LATER == status) {
                 returnType = ConsumeReturnType.FAILED;

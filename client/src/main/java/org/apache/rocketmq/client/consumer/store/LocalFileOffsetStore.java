@@ -128,12 +128,14 @@ public class LocalFileOffsetStore implements OffsetStore {
         return -1;
     }
 
+    // 持久化
     @Override
     public void persistAll(Set<MessageQueue> mqs) {
         if (null == mqs || mqs.isEmpty())
             return;
 
         OffsetSerializeWrapper offsetSerializeWrapper = new OffsetSerializeWrapper();
+        // offset 的记录采用的就是atomicLong，为什么呢，这个会有并发的问题吗
         for (Map.Entry<MessageQueue, AtomicLong> entry : this.offsetTable.entrySet()) {
             if (mqs.contains(entry.getKey())) {
                 AtomicLong offset = entry.getValue();
